@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Codeforces User Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="back"></div>
+    <div id="home">
+      <div class="landing-text">
+          <center><h1>WELCOME TO CODEFORCES</h1></center> 
+      </div>
+    </div>
+
+    <div class="back2"></div>
+
+    <div class="main-container">
+      <div class="search-container">
+        <input type="text" name="Username" id="input" class="input" placeholder="Codeforces Username"/>
+        <button id="search" class="search">Search</button>
+      </div>
+      <div class="profile">
+        <div class="img-name">
+          <img src="default.png" alt="" id="profile-img" class="img"/><br/>
+          <span class="name" id="name">Name</span><br/>
+          <a class="username" id="username">@username</a>
+        </div>
+        <br>
+        <span>Organization - </span> <span id="org"> xxxx </span> <br>
+        <span>Max Rating - </span><span id="maxRate"> 0000</span> <br>
+        <span>Max Rank - </span><span id="maxRank"> xxxx </span> <br>
+        <span>Current Rank - </span><span id="curRank"> xxxx </span> <br>
+        <br>
+        <div class="other">
+          <a ><span id="contributions">0000</span>contributions</a>
+          <a ><span id="rating">0000</span>contest rating</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      $("#search").click(() => {
+        $.getJSON("https://codeforces.com/api/user.info?handles=" + $("#input").val(),
+          (data) => {
+            //console.log(data.result[0].country) 
+            $("#profile-img").attr("src", data.result[0].titlePhoto);
+            $("#name").html(data.result[0].firstName + " " + data.result[0].lastName);
+            $("#username").html("@" + data.result[0].handle);
+            $("#maxRate").html(data.result[0].maxRating);    
+            $("#contributions").html(data.result[0].contribution);
+            $("#rating").html(data.result[0].rating);
+            $("#maxRank").html(data.result[0].maxRank);
+            $("#org").html(data.result[0].organization);
+            $("#curRank").html(data.result[0].rank);
+          }
+        );
+      });
+    </script>
+  </body>
+</html>
