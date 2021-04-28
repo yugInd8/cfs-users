@@ -67,10 +67,6 @@
 
     <script>
       async function getFORCES() {
-          if(document.getElementById('input').value.length == 0) {
-            document.getElementById('input').placeholder = "Enter a valid codeforces username";
-          }
-          else {
             var username = document.getElementById('input').value;
             const api = `https://codeforces.com/api/user.info?handles= ${username}`
             const response = await fetch(api);
@@ -85,7 +81,7 @@
             document.getElementById('maxRank').innerHTML = data.result[0].maxRank;
             document.getElementById('org').innerHTML = data.result[0].organization;
             document.getElementById('curRank').innerHTML = data.result[0].rank;
-          }
+          
           //$("#profile-img").attr("src", data.result[0].titlePhoto);
       }
     </script>
