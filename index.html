@@ -26,8 +26,9 @@
     <div class="main-container">
       <div class="search-container">
         <input type="text" name="Username" id="input" class="input" placeholder="Codeforces Username"/>
-        <button id="search" class="search" onclick="getFORCES()">Search</button>
+        <button id="search" class="search" onclick="get_userAPI()">Search</button>
       </div>
+
       <div class="profile">
         <div class="img-name">
           <img src="default.png" alt="" id="profile-img" class="img"/><br/>
@@ -35,10 +36,10 @@
           <a class="username" id="username">@username</a>
         </div>
         <br>
-        <span>Organization - </span> <span id="org"> xxxx </span> <br>
-        <span>Max Rating - </span><span id="maxRate"> 0000</span> <br>
-        <span>Max Rank - </span><span id="maxRank"> xxxx </span> <br>
-        <span>Current Rank - </span><span id="curRank"> xxxx </span> <br>
+        <span>Organization - </span> <span id="org" class="bolds"> xxxx </span> <br>
+        <span>Max Rating - </span><span id="maxRate" class="bolds"> 0000</span> <br>
+        <span>Max Rank - </span><span id="maxRank" class="bolds"> xxxx </span> <br>
+        <span>Current Rank - </span><span id="curRank" class="bolds"> xxxx </span> <br>
         <br>
         <div class="other">
           <a ><span id="contributions">0000</span>contributions</a>
@@ -65,10 +66,31 @@
       });
     </script> -->
 
+    <div class="contests">
+      <!-- bruh -->
+      <br>
+      <button id="show" class="search" onclick="show()">SHOW</button> <br>
+      <button id="left" class="search" onclick="backward()">Previous</button>
+      <button id="right" class="search" onclick="forward()">Next</button>
+      <br>
+      <div class="dets">
+        <br>
+        <span>Contest Name - </span><span id="cname" class="bolds"> 0000</span> <br>
+        <span>Contest Duration - </span><span id="cdura" class="bolds"> 0000</span> <br>
+        <span>Contest Difficultry - </span><span id="cdiff" class="bolds"> 0000</span> <br>
+        <span>Contest ID - </span><span id="cid" class="bolds"> 0000</span> <br>
+      </div>
+      <br>
+      <button id="indC" class="search">Contest 0000</button>
+    </div>
+    bruh2
+    <!-- <button id="search" class="search" onclick="get_userAPI()">Search</button> -->
+
     <script>
-      async function getFORCES() {
+      async function get_userAPI() {
           if(document.getElementById('input').value.length == 0) {
             document.getElementById('input').placeholder = "Enter a valid codeforces username";
+            
           }
           else {
             var username = document.getElementById('input').value;
@@ -78,7 +100,7 @@
 
             document.getElementById('profile-img').src = data.result[0].titlePhoto ;
             document.getElementById('name').innerHTML = data.result[0].firstName + " "+ data.result[0].lastName;
-            document.getElementById('username').innerHTML = data.result[0].handle;
+            document.getElementById('username').innerHTML = "@"+data.result[0].handle;
             document.getElementById('maxRate').innerHTML = data.result[0].maxRating;
             document.getElementById('contributions').innerHTML = data.result[0].contribution;
             document.getElementById('rating').innerHTML = data.result[0].rating;
@@ -88,6 +110,30 @@
           }
           //$("#profile-img").attr("src", data.result[0].titlePhoto);
       }
+      var index = 0;
+      async function show(){
+        const contestAPI = 'https://codeforces.com/api/contest.list?gym=true';
+        const fetch2 = await fetch(contestAPI);
+        var data2 = await fetch2.json();
+        console.log(data2.result[index]);
+        document.getElementById('cname').innerHTML = data2.result[index].name;
+        document.getElementById('cdiff').innerHTML = data2.result[index].difficulty;
+        document.getElementById('cdura').innerHTML = (data2.result[index].durationSeconds / 60) + " minutes";
+        document.getElementById('cid').innerHTML = data2.result[index].id;
+        document.getElementById('indC').innerHTML = "Contest " + (index+1);
+      }
+
+      async function forward() {
+        index++;
+        console.log(index);
+        show();
+      }
+      async function backward() {
+        index--;
+        console.log(index);
+        show()
+      }
+
     </script>
 
   </body>

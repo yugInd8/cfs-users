@@ -49,8 +49,10 @@ body, html {
 }
 
 .landing-text h1 {
-  
   font-weight: 700%;
+}
+.name {
+  font-weight: bold;
 }
 
 
@@ -81,9 +83,9 @@ body, html {
   border: none;
   cursor: pointer;
   outline: none;
-  color: #fff;
+  color: aqua;
   height: 100%;
-  background-color: rgb(59, 128, 255);
+  background-color: rgb(31, 41, 41);
 }
 .profile {
   width: 380px;
@@ -144,6 +146,41 @@ body, html {
   font-size: 20px;
   font-weight: bold;
 }
+
+.contests {
+  width: 700px;
+  margin: 50px auto;
+  text-align: center;
+  position: relative;
+
+  background-color: rgba(255, 255, 255, 0.438);
+  backdrop-filter: blur(6px);
+  margin-top: 40px;
+  margin-bottom: 110px;
+  padding-bottom: 35px;
+  border-radius: 10px;
+  font-family: "Varela Round", sans-serif;
+  overflow: hidden;
+  font-weight: 500;
+}
+.dets {
+  padding-left: 100px;
+  text-align: left;
+}
+
+.bolds {
+  font-weight: bold;
+}
+
+#left {
+  text-align: left;
+}
+
+#right {
+  text-align: right;
+}
+
+
 
 
 
