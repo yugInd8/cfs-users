@@ -29,7 +29,9 @@
         <button id="search" class="search" onclick="get_userAPI()">Search</button>
       </div>
 
-      <div class="profile">
+      <center><div id="hideloader" class="loader"></div></center>
+
+      <div class="profile" id="hidden">
         <div class="img-name">
           <img src="default.png" alt="" id="profile-img" class="img"/><br/>
           <span class="name" id="name">Name</span><br/>
@@ -69,7 +71,7 @@
     <div class="contests">
       <!-- bruh -->
       <br>
-      <button id="show" class="search" onclick="show()">SHOW</button> <br>
+      <button id="show" class="search" onclick="start()">SHOW</button> <br>
       <button id="left" class="search" onclick="backward()">Previous</button>
       <button id="right" class="search" onclick="forward()">Next</button>
       <br>
@@ -107,14 +109,35 @@
             document.getElementById('org').innerHTML = data.result[0].organization;
             document.getElementById('curRank').innerHTML = data.result[0].rank;
           }
+          loadershowfor5();
           
           //$("#profile-img").attr("src", data.result[0].titlePhoto);
       }
+      function loadershowfor5() {
+        var temp = document.getElementById('hideloader');
+        temp.style.display = 'block';
+        setTimeout(lsf5end(), 30000);
+      }
+      function lsf5end() {
+        var temp = document.getElementById('hideloader');
+        temp.style.display = 'none';
+        unhide();
+      }
+
+      function unhide() {
+        var toHide = document.getElementById('hidden');
+        toHide.style.display = 'block' ;
+      }
+
       var index = 0;
-      async function show(){
+      var data2;
+      async function start() {
         const contestAPI = 'https://codeforces.com/api/contest.list?gym=true';
         const fetch2 = await fetch(contestAPI);
-        var data2 = await fetch2.json();
+        data2 = await fetch2.json();
+        show();
+      }
+      async function show(){
         console.log(data2.result[index]);
         document.getElementById('cname').innerHTML = data2.result[index].name;
         document.getElementById('cdiff').innerHTML = data2.result[index].difficulty;
@@ -135,6 +158,5 @@
       }
 
     </script>
-
   </body>
 </html>
