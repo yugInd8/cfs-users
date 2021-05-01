@@ -180,6 +180,9 @@ body, html {
   text-align: right;
 }
 
+#toggle {
+  display: none;
+}
 
 
 

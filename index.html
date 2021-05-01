@@ -26,10 +26,10 @@
     <div class="main-container">
       <div class="search-container">
         <input type="text" name="Username" id="input" class="input" placeholder="Codeforces Username"/>
-        <button id="search" class="search" onclick="get_userAPI()">Search</button>
+        <button id="search" class="search" onclick="kick()">Search</button>
       </div>
 
-      <div class="profile">
+      <div class="profile" id="toggle">
         <div class="img-name">
           <img src="default.png" alt="" id="profile-img" class="img"/><br/>
           <span class="name" id="name">Name</span><br/>
@@ -87,6 +87,11 @@
     <!-- <button id="search" class="search" onclick="get_userAPI()">Search</button> -->
 
     <script>
+      function kick(){
+        var temp = document.getElementById('toggle');
+        temp.style.display = 'block';
+        get_userAPI();
+      }
       async function get_userAPI() {
         var username = document.getElementById('input').value;
         const api = `https://codeforces.com/api/user.info?handles= ${username}`
@@ -96,13 +101,11 @@
         //console.log(data.status);
         //console.log(`https://codeforces.com/api/user.info?handles= ${username}`)
         
-        if(data.status=='FAILED') {
+        if(data.status=='FAILED') { //invalid input error handling
             document.getElementById('input').value = '';
             document.getElementById('input').placeholder = "Enter a valid codeforces username";
           }
-          else {
-            //var username = document.getElementById('input').value;
-            
+          else {            
             document.getElementById('profile-img').src = data.result[0].titlePhoto ;
             document.getElementById('name').innerHTML = data.result[0].firstName + " "+ data.result[0].lastName;
             document.getElementById('username').innerHTML = "@"+data.result[0].handle;
