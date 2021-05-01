@@ -69,7 +69,7 @@
     <div class="contests">
       <!-- bruh -->
       <br>
-      <button id="show" class="search" onclick="show()">SHOW</button> <br>
+      <button id="show" class="search" onclick="start()">SHOW</button> <br>
       <button id="left" class="search" onclick="backward()">Previous</button>
       <button id="right" class="search" onclick="forward()">Next</button>
       <br>
@@ -88,15 +88,21 @@
 
     <script>
       async function get_userAPI() {
-          if(document.getElementById('input').value.length == 0) {
+        var username = document.getElementById('input').value;
+        const api = `https://codeforces.com/api/user.info?handles= ${username}`
+        const response = await fetch(api);
+        const data = await response.json();
+        
+        //console.log(data.status);
+        //console.log(`https://codeforces.com/api/user.info?handles= ${username}`)
+        
+        if(data.status=='FAILED') {
+            document.getElementById('input').value = '';
             document.getElementById('input').placeholder = "Enter a valid codeforces username";
           }
           else {
-            var username = document.getElementById('input').value;
-            const api = `https://codeforces.com/api/user.info?handles= ${username}`
-            const response = await fetch(api);
-            const data = await response.json();
-
+            //var username = document.getElementById('input').value;
+            
             document.getElementById('profile-img').src = data.result[0].titlePhoto ;
             document.getElementById('name').innerHTML = data.result[0].firstName + " "+ data.result[0].lastName;
             document.getElementById('username').innerHTML = "@"+data.result[0].handle;
@@ -110,11 +116,18 @@
           
           //$("#profile-img").attr("src", data.result[0].titlePhoto);
       }
+
       var index = 0;
-      async function show(){
+      var data2;
+      
+      async function start(){
         const contestAPI = 'https://codeforces.com/api/contest.list?gym=true';
         const fetch2 = await fetch(contestAPI);
-        var data2 = await fetch2.json();
+        data2 = await fetch2.json();
+        show();
+      }
+
+      async function show(){
         console.log(data2.result[index]);
         document.getElementById('cname').innerHTML = data2.result[index].name;
         document.getElementById('cdiff').innerHTML = data2.result[index].difficulty;
